@@ -30,11 +30,10 @@ def whatsapp_reply():
     resp = MessagingResponse()
 
     try:
-        # Appel à l'API OpenAI avec la nouvelle syntaxe
+        # Appel à l'API OpenAI avec la bonne méthode
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo",  # Utilisez le modèle approprié ici
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": incoming_msg}
             ]
         )
