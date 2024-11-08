@@ -1,4 +1,3 @@
-Flask
-twilio
-openai>=1.0.0
-gunicorn
+Flask==3.0.3
+twilio==9.3.6
+openai==1.54.3  # Assurez-vous d'utiliser la dernière version
