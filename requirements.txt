@@ -1,4 +1,4 @@
 Flask
 twilio
 openai
-gunicorn
+sqlite3
