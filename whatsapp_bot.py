@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 from twilio.twiml.messaging_response import MessagingResponse
 import os
 from openai import OpenAI
@@ -57,6 +57,21 @@ def whatsapp_reply():
 
     msg = resp.message(chat_response)
     return str(resp)
+
+@app.route("/admin", methods=["GET"])
+def admin():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    
+    # Récupérer les 30 derniers messages
+    cursor.execute('''
+        SELECT * FROM messages ORDER BY timestamp DESC LIMIT 30
+    ''')
+    messages = cursor.fetchall()
+    
+    conn.close()
+    
+    return render_template("admin.html", messages=messages)
 
 if __name__ == "__main__":
     app.run(port=5000)
