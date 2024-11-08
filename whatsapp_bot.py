@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 import os
 from openai import OpenAI
@@ -39,7 +39,14 @@ def whatsapp_reply():
             model="gpt-4",
             messages=[{"role": "user", "content": incoming_msg}]
         )
+        
+        # Récupérer la réponse
         chat_response = chat_completion.choices[0].message.content
+        
+        # Limiter la longueur de la réponse
+        max_length = 200  # Par exemple, limiter à 200 caractères
+        if len(chat_response) > max_length:
+            chat_response = chat_response[:max_length] + "..."  # Tronquer et ajouter des points de suspension
         
         # Enregistrement du message et de la réponse dans la base de données
         conn = sqlite3.connect('database.db')
@@ -57,18 +64,6 @@ def whatsapp_reply():
 
     msg = resp.message(chat_response)
     return str(resp)
-
-@app.route("/admin")
-def admin():
-    # Récupérer les derniers messages de la base de données
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM messages ORDER BY timestamp DESC LIMIT 30
-    ''')
-    messages = cursor.fetchall()
-    conn.close()
-    return render_template("admin.html", messages=messages)
 
 if __name__ == "__main__":
     app.run(port=5000)
