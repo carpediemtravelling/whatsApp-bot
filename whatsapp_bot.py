@@ -39,7 +39,7 @@ def whatsapp_reply():
             model="gpt-4",
             messages=[{"role": "user", "content": incoming_msg}]
         )
-        chat_response = chat_completion.choices[0].message.content  # Correction ici
+        chat_response = chat_completion.choices[0].message.content
         
         # Enregistrement du message et de la réponse dans la base de données
         conn = sqlite3.connect('database.db')
