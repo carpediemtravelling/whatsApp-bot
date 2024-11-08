@@ -32,7 +32,7 @@ def whatsapp_reply():
     try:
         # Appel à l'API OpenAI avec la bonne méthode
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # Utilisez le modèle approprié ici
+            model="gpt-3.5-turbo",
             messages=[
                 {"role": "user", "content": incoming_msg}
             ]
