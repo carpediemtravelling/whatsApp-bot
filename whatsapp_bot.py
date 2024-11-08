@@ -36,7 +36,7 @@ def whatsapp_reply():
     try:
         # Appel à l'API OpenAI pour obtenir une réponse de ChatGPT
         chat_completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[{"role": "user", "content": incoming_msg}]
         )
         chat_response = chat_completion.choices[0].message.content  # Correction ici
